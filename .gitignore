@@ -1,3 +1,6 @@
 node_modules/
 build/
 .env
+
+# Mercantil session
+api/components/mercantil/controller/*.json

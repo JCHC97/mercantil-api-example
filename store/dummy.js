@@ -35,7 +35,7 @@ async function query(tabla, q) {
   return col.filter(item => item[key] === q[key])[0] || null
 }
 
-module.exports = {
+export default {
   list,
   get,
   upsert,

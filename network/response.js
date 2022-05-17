@@ -1,4 +1,4 @@
-exports.success = function (req, res, data = null, status = 200) {
+export const success = function (req, res, data = null, status = 200) {
   res.status(status).json({
     error: false,
     status: status,
@@ -6,10 +6,12 @@ exports.success = function (req, res, data = null, status = 200) {
   })
 }
 
-exports.error = function (req, res, data = 'Internal server error', status = 500) {
+export const error = function (req, res, data = 'Internal server error', status = 500) {
   res.status(status).send({
     error: data,
     status: status,
     data: null
   })
 }
+
+export default { success, error }

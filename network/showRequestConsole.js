@@ -5,4 +5,4 @@ function showRequestConsole(req, res, next) {
   next()
 }
 
-module.exports = showRequestConsole
+export default showRequestConsole

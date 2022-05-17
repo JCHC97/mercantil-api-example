@@ -5,4 +5,4 @@ function HttpException(message = 'Error Interno', code) {
   return e
 }
 
-module.exports = HttpException
+export default HttpException

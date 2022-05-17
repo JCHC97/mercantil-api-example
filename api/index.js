@@ -1,11 +1,10 @@
-require('module-alias/register')
-const express = require('express')
-const cors = require('cors')
+import express from 'express'
+import cors from 'cors'
 
-const errors = require('@network/errors')
-const config = require('@config')
+import errors from '#network/errors.js'
+import config from '#config'
 
-const testRouter = require('./components/test/routes')
+import testMercantil from './components/mercantil/routes.js'
 
 const app = express()
 
@@ -15,11 +14,11 @@ app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 // Router
-app.use('/api/test', testRouter)
+app.use('/api/mercantil', testMercantil)
 
 // Error Handlers
 app.use(errors)
 
-app.listen(config.api.port, () => {
-  console.log('API listen on port ', config.api.port)
+app.listen(config.API.PORT, () => {
+  console.log('API listen on port ', config.API.PORT)
 })

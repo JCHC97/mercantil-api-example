@@ -1,7 +1,5 @@
 import axios from 'axios'
-let instance = null
-const HttpException = require('@utils/HttpException')
-
+import HttpException from '#utils/HttpException.js'
 // const host = config.host
 const host = ''
 
@@ -12,16 +10,16 @@ const setUrl = (url = '', query = {}) => {
     const separator = acc ? '&' : '?'
     return acc.concat(`${separator}${key}=${value}`)
   }, '')
-  console.log({ url, queryParams })
+  // console.log({ url, queryParams, urlFinal: url + queryParams })
   return url + queryParams
 }
 
-const getToken = () => ({})
-
-const handleError = (err, msgHead) => {
-  console.log(`handleError`)
-  console.log(`${msgHead} ${err.message}`)
-  return HttpException(`${msgHead} ${err.message}`, err.statusCode)
+const handleError = (msgHead, err) => {
+  // console.log(`handleError`, { err })
+  console.log(`handleError response`, err.response.data )
+  const { message, statusCode } = err
+  console.log({ message, statusCode })
+  return HttpException(`${msgHead} ${message}`, statusCode)
 }
 
 /* const getToken = () => {
@@ -29,29 +27,34 @@ const handleError = (err, msgHead) => {
     const accessToken = tokenStorage ? `Bearer ${tokenStorage}` : ''
     return accessToken
 } */
+const getToken = () => ({})
 
-axios.interceptors.request.use(req => {
-  // console.log({ url: req.url })
-  return req
-}, err => console.error(err))
+
+// INTERCEPTORS
+axios.interceptors.request.use(config => {
+  // console.log('[axios] interceptors - request', { config })
+  console.log(`[${config.method}] ${config.url}`)
+  return config
+}, err => ({ error: handleError('[request]', err) }))
 
 axios.interceptors.response.use(res => {
-  // console.log('interceptors', {res})
-  if (!res) throw HttpException('No se obtuvo respuesta, por favor verifique su conexión a internet.')
+  console.log('[axios] interceptors - response', { res })
+  if (!res) return HttpException('No se obtuvo respuesta, por favor verifique su conexión a internet.')
   return res
-}, err => err.response)
+}, err => ({ error: handleError('[axios] interceptors - response', err) }))
 
+
+// Class for http requests
 class Http {
-  //  static instance = null
-  static get instance() {
-    if (instance === null) instance = new Http()
-    return instance
+  static instance = null
+
+  static get getInstance() {
+    if (Http.instance === null) Http.instance = new Http()
+    return Http.instance
   }
 
   get = ({ url, query, headers = {} }) =>
     axios.get(setUrl(url, query), {
-      mode: 'cors',
-      credentials: 'same-origin',
       headers: {
         Accept: 'application/json',
         Authorization: getToken(),
@@ -59,12 +62,10 @@ class Http {
         ...headers
       }
     }).then(res => res)
-      .catch(err => { throw handleError(err, `[GET] ${url}:`) })
+      .catch(err => { throw handleError(`[GET] ${url}:`, err) })
 
   post = ({ url, query, body = {}, headers = {} }) =>
     axios.post(setUrl(url, query), body, {
-      mode: 'cors',
-      credentials: 'same-origin',
       headers: {
         Accept: 'application/json',
         Authorization: getToken(),
@@ -72,7 +73,7 @@ class Http {
         ...headers
       }
     }).then(res => res)
-      .catch(err => { throw handleError(err, `[POST] ${url}:`) })
+      .catch(err => { throw handleError(`[POST] ${url}:`, err) })
 
   put = ({ url, query, body = {}, headers = {} }) =>
     axios.put(setUrl(url, query), body, {
@@ -85,7 +86,7 @@ class Http {
         ...headers
       }
     }).then(res => res)
-      .catch(err => { throw handleError(err, `[PUT] ${url}:`) })
+      .catch(err => { throw handleError(`[PUT] ${url}:`, err) })
 
   patch = ({ url, query, body = {}, headers = {} }) =>
     axios.patch(setUrl(url, query), body, {
@@ -98,7 +99,7 @@ class Http {
         ...headers
       }
     }).then(res => res)
-      .catch(err => { throw handleError(err, `[PATCH] ${url}:`) })
+      .catch(err => { throw handleError(`[PATCH] ${url}:`, err) })
 
   delete = (url, query, headers = {}) =>
     axios.delete(setUrl(url, query), {
@@ -111,9 +112,8 @@ class Http {
         ...headers
       }
     }).then(res => res)
-      .catch(err => { throw handleError(err, `[DELETE] ${url}:`) })
+      .catch(err => { throw handleError(`[DELETE] ${url}:`, err) })
 
 }
 
-
-module.exports = Http
+export default Http.getInstance

@@ -3,25 +3,26 @@
   "description": "initial structure for projects with component-based node",
   "version": "1.0.0",
   "main": "api/index.js",
+  "type": "module",
   "scripts": {
-    "dev": "nodemon api/index.js --exec babel-node",
+    "dev": "nodemon  api/index.js --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "MIT",
+  "imports": {
+    "#root/*": "./*",
+    "#api/*": "./api/*",
+    "#config": "./config.js",
+    "#middlewares/*": "./middlewares/*",
+    "#network/*": "./network/*",
+    "#store/*": "./store/*",
+    "#utils/*": "./utils/*"
+  },
   "dependencies": {
+    "axios": "^0.26.1",
     "cors": "^2.8.5",
     "dotenv": "^16.0.0",
-    "express": "^4.17.3",
-    "module-alias": "^2.2.2"
-  },
-  "_moduleAliases": {
-    "@root": ".",
-    "@api": "api",
-    "@config": "config.js",
-    "@middlewares": "middlewares",
-    "@network": "network",
-    "@store": "store",
-    "@utils": "utils"
+    "express": "^4.17.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",

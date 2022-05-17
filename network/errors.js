@@ -1,4 +1,4 @@
-const response = require('./response')
+import response from './response.js'
 
 function errors(err, req, res, next) {
   let { message, statusCode } = err
@@ -12,4 +12,4 @@ function errors(err, req, res, next) {
   response.error(req, res, message, statusCode)
 }
 
-module.exports = errors
+export default errors
