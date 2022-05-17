@@ -1,6 +1,7 @@
 # API Mercantil - Código Base
 
-ES un API basada en componentes, que utilzando el AEScipher y bodies por default de cada request pone a disposición varios endpoints.   Le servirá para accelerar la integración de la API MErcantil como módulo de pagos en sus proyectos, evitando gran parte del tiempo que toma entender los detalles de la documentación y la comunicación con el equipo de atención al cliente.
+Es un API basada en componentes, que utilzando el AEScipher y bodies por default de cada request pone a disposición varios endpoints.   Le servirá para accelerar la integración de la API MErcantil como módulo de pagos en sus proyectos, evitando gran parte del tiempo que toma entender los detalles de la documentación y la comunicación con el equipo de atención al cliente. Es un código base al que luego se le deben agregar las funcionalidades del negocio.
+
 
 ## Credenciales
 
