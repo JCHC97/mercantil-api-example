@@ -1,8 +1,12 @@
-# API MERCANTIL - CÓDIGO BASE
+# API Mercantil - Código Base
+
+ES un API basada en componentes, que utilzando el AEScipher y bodies por default de cada request pone a disposición varios endpoints.   Le servirá para accelerar la integración de la API MErcantil como módulo de pagos en sus proyectos, evitando gran parte del tiempo que toma entender los detalles de la documentación y la comunicación con el equipo de atención al cliente.
+
+## Credenciales
 
 Debe agregar sus credenciales otorgadas por apisupport del Portal API Mercantil en el archivo .env tomando de ejemplo el .env.example
 
-MERCANTIL_DEV va depender de las credenciales que vaya a utilizar, es decir, el ambiente en que se encuentre:
+_MERCANTIL_DEV_ va depender de las credenciales que vaya a utilizar, es decir, el ambiente en que se encuentre:
   true: si las credenciales ingresadas corresponden a Desarrollo
   false: si las credenciales ingresadas corresponden a Produccion
 
